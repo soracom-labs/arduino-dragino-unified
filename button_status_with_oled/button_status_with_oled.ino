@@ -1,0 +1,32 @@
+/*
+ * button_status_with_oled.ino
+ * Display button status
+ *
+ * Copyright (c) 2020 SORACOM, INC.
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ */
+
+#include <U8x8lib.h>
+U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ SCL, /* data=*/ SDA, /* reset=*/ U8X8_PIN_NONE);
+#define U8X8_ENABLE_180_DEGREE_ROTATION 1
+
+#define buttonPin 6
+void setup(void) {
+  u8x8.begin();
+  u8x8.setFlipMode(U8X8_ENABLE_180_DEGREE_ROTATION);
+  u8x8.setFont(u8x8_font_8x13B_1x2_f);
+  u8x8.setCursor(0, 0);
+  u8x8.print("Button Demo.");
+  u8x8.setCursor(0, 2);
+  u8x8.print("NOW:");
+  pinMode(buttonPin, INPUT_PULLUP);
+}
+
+void loop(void) {
+  if (digitalRead(buttonPin)) {
+    u8x8.drawString(5, 2, "PUSHED  ");
+  } else {
+    u8x8.drawString(5, 2, "RELEASED");
+  }
+}
