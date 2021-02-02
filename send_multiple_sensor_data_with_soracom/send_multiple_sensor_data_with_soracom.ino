@@ -17,6 +17,7 @@
 #define RX 10
 #define TX 11
 #define BAUDRATE 9600
+#define BG96_RESET 15
 
 #define TINY_GSM_MODEM_BG96
 #include <TinyGsmClient.h>
@@ -41,6 +42,11 @@ void drawText_P(U8X8* u8x8, const char* pgm_s, int width = OLED_MAX_CHAR_LENGTH)
 #include <Seeed_BMP280.h>
 BMP280 bmp280;
 
+#define RESET_DURATION 86400000UL // 1 day
+void software_reset() {
+  asm volatile ("  jmp 0");
+}
+
 void setup() {
   CONSOLE.begin(115200);
   LTE_M_shieldUART.begin(BAUDRATE);
@@ -52,6 +58,15 @@ void setup() {
   u8x8.clear();
   drawText_P(&u8x8, PSTR("Welcome to ")); drawText(&u8x8, SKETCH_NAME); drawText_P(&u8x8, PSTR(" ")); drawText(&u8x8, VERSION);
   delay(3000);
+
+  CONSOLE.print(F("resetting module "));
+  pinMode(BG96_RESET,OUTPUT);
+  digitalWrite(BG96_RESET,LOW);
+  delay(300);
+  digitalWrite(BG96_RESET,HIGH);
+  delay(300);
+  digitalWrite(BG96_RESET,LOW);
+  CONSOLE.println(F(" done."));
 
   u8x8.clear();
   drawText_P(&u8x8, PSTR("modem.restart()..."));
@@ -179,6 +194,14 @@ void loop() {
   u8x8.clearLine(6);
 
   delay(INTERVAL_MS);
+#ifdef RESET_DURATION
+  if(millis() > RESET_DURATION )
+  {
+    CONSOLE.println("Execute software reset...");
+    delay(1000);
+    software_reset();
+  }
+#endif
 }
 
 void drawText(U8X8* u8x8, const char* in_str, int width = OLED_MAX_CHAR_LENGTH) {

@@ -109,6 +109,8 @@ void loop() {
   // NOTE: response body is ignore
   ctx.stop();
 
+  delay(INTERVAL_MS);
+  
 #ifdef RESET_DURATION
   if(millis() > RESET_DURATION )
   {
@@ -117,6 +119,4 @@ void loop() {
     software_reset();
   }
 #endif
-
-  delay(INTERVAL_MS);
 }
