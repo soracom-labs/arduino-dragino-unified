@@ -17,6 +17,7 @@
 #define RX 10
 #define TX 11
 #define BAUDRATE 9600
+#define BG96_RESET 15
 
 #define TINY_GSM_MODEM_BG96
 #include <TinyGsmClient.h>
@@ -26,11 +27,26 @@ SoftwareSerial LTE_M_shieldUART(RX, TX);
 TinyGsm modem(LTE_M_shieldUART);
 TinyGsmClient ctx(modem);
 
+// #define RESET_DURATION 86400000UL // 1 day
+void software_reset() {
+  asm volatile ("  jmp 0");
+}
+
 void setup() {
   CONSOLE.begin(115200);
 
   CONSOLE.println();
   CONSOLE.print(F("Welcome to ")); CONSOLE.print(SKETCH_NAME); CONSOLE.print(F(" ")); CONSOLE.println(VERSION);
+
+  CONSOLE.print(F("resetting module "));
+  pinMode(BG96_RESET,OUTPUT);
+  digitalWrite(BG96_RESET,LOW);
+  delay(300);
+  digitalWrite(BG96_RESET,HIGH);
+  delay(300);
+  digitalWrite(BG96_RESET,LOW);
+  CONSOLE.println(F(" done."));
+
   LTE_M_shieldUART.begin(BAUDRATE);
 
   CONSOLE.print(F("modem.restart()"));
@@ -94,4 +110,13 @@ void loop() {
   ctx.stop();
 
   delay(INTERVAL_MS);
+  
+#ifdef RESET_DURATION
+  if(millis() > RESET_DURATION )
+  {
+    CONSOLE.println("Execute software reset...");
+    delay(1000);
+    software_reset();
+  }
+#endif
 }
