@@ -118,16 +118,16 @@ void setup() {
 
 #define lightSensorPin A6
 #define soundSensorPin A2
-#define sountSamplingCount 3
+#define soundSamplingCount 3
 void loop() {
   int light_raw_value = analogRead(lightSensorPin);
   int light_mapped_value = map(light_raw_value, 0, 1023, 0, 100);
 
   long sound_raw_value_sum = 0;
-  for (int i = 0; i < sountSamplingCount; i++) {
+  for (int i = 0; i < soundSamplingCount; i++) {
     sound_raw_value_sum += analogRead(soundSensorPin);
   }
-  int sound_mapped_value = map(sound_raw_value_sum / sountSamplingCount, 0, 1023, 0, 100);
+  int sound_mapped_value = map(sound_raw_value_sum / soundSamplingCount, 0, 1023, 0, 100);
 
   float temp = dht.readTemperature();
   char temp_buf[10];
