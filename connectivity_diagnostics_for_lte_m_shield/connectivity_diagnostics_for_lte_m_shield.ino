@@ -72,6 +72,10 @@ void showModemInformation() {
 void showNetworkInformation() {
   String res;
   
+  CONSOLE.println("> AT+QCSQ");
+  res = executeAT(F("+QCSQ"), 300);
+  CONSOLE.println(res);
+  
   CONSOLE.println("> AT+COPS?");
   res = executeAT(F("+COPS?"), 300);
   CONSOLE.println(res);
@@ -220,7 +224,9 @@ void setup() {
   bool networkConnected = MODEM.waitForNetwork();
   CONSOLE.println((networkConnected) ? "[OK]" : "[FAILED]");
   if (!networkConnected) {
-    CONSOLE.println("Failed to connect cellular network, please RESET and retry later.");
+    CONSOLE.println("Failed to connect cellular network.");
+    CONSOLE.println("Make sure active SIM has been inserted to the modem, and then check the antenna has been connected correctly.");
+    CONSOLE.println("Please RESET and retry later.");
     while(1);
   }
 
