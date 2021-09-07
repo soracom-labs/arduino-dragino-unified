@@ -67,6 +67,11 @@ void showModemInformation() {
   res = executeAT(F("+QSIMSTAT?"), 300);
   CONSOLE.println(res);
   
+}
+
+void showNetworkInformation() {
+  String res;
+  
   CONSOLE.println("> AT+COPS?");
   res = executeAT(F("+COPS?"), 300);
   CONSOLE.println(res);
@@ -199,6 +204,10 @@ void setup() {
   }
 
   CONSOLE.println();
+  CONSOLE.println("--- Getting modem info...");
+  showModemInformation();
+
+  CONSOLE.println();
   CONSOLE.println("--- Executing AT commands to connect SORACOM network...");
   bool setupNetworkResult = setupNetworkConfigurations();
   if (!setupNetworkResult) {
@@ -216,8 +225,8 @@ void setup() {
   }
 
   CONSOLE.println();
-  CONSOLE.println("--- Getting modem info...");
-  showModemInformation();
+  CONSOLE.println("--- Getting network info...");
+  showNetworkInformation();
 
   CONSOLE.println();
   CONSOLE.println("--- Conntectivity test: Ping to pong.soracom.io...");
