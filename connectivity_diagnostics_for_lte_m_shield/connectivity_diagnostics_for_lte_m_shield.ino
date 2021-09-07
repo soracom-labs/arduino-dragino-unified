@@ -55,15 +55,15 @@ bool isOk(String str) {
 void showModemInformation() {
   String res;
 
-  CONSOLE.println("> AT+GSN");
+  CONSOLE.println(F("> AT+GSN"));
   res = executeAT(F("+GSN"), 300);
   CONSOLE.println(res);
   
-  CONSOLE.println("> AT+CIMI");
+  CONSOLE.println(F("> AT+CIMI"));
   res = executeAT(F("+CIMI"), 300);
   CONSOLE.println(res);
   
-  CONSOLE.println("> AT+QSIMSTAT?");
+  CONSOLE.println(F("> AT+QSIMSTAT?"));
   res = executeAT(F("+QSIMSTAT?"), 300);
   CONSOLE.println(res);
   
@@ -72,15 +72,15 @@ void showModemInformation() {
 void showNetworkInformation() {
   String res;
   
-  CONSOLE.println("> AT+QCSQ");
+  CONSOLE.println(F("> AT+QCSQ"));
   res = executeAT(F("+QCSQ"), 300);
   CONSOLE.println(res);
   
-  CONSOLE.println("> AT+COPS?");
+  CONSOLE.println(F("> AT+COPS?"));
   res = executeAT(F("+COPS?"), 300);
   CONSOLE.println(res);
   
-  CONSOLE.println("> AT+CGPADDR");
+  CONSOLE.println(F("> AT+CGPADDR"));
   res = executeAT(F("+CGPADDR"), 300);
   CONSOLE.println(res);
 }
@@ -88,22 +88,22 @@ void showNetworkInformation() {
 bool setupNetworkConfigurations() {
   String res;
   
-  CONSOLE.println("> AT+CGDCONT=1,\"IP\",\"soracom.io\",\"0.0.0.0\",0,0,0,0");
+  CONSOLE.println(F("> AT+CGDCONT=1,\"IP\",\"soracom.io\",\"0.0.0.0\",0,0,0,0"));
   res = executeAT(F("+CGDCONT=1,\"IP\",\"soracom.io\",\"0.0.0.0\",0,0,0,0"), 300);
   CONSOLE.println(res);
   bool setupPDP = isOk(res);
 
-  CONSOLE.println("> AT+QCFG=\"nwscanmode\",0,0");
+  CONSOLE.println(F("> AT+QCFG=\"nwscanmode\",0,0"));
   res = executeAT(F("+QCFG=\"nwscanmode\",0,0"), 300);
   CONSOLE.println(res);
   bool networkScanMode = isOk(res);
   
-  CONSOLE.println("> AT+QCFG=\"iotopmode\",0,0");
+  CONSOLE.println(F("> AT+QCFG=\"iotopmode\",0,0"));
   res = executeAT(F("+QCFG=\"iotopmode\",0,0"), 300);
   CONSOLE.println(res);
   bool networkCategory = isOk(res);
 
-  CONSOLE.println("> AT+QCFG=\"nwscanseq\",00,1");
+  CONSOLE.println(F("> AT+QCFG=\"nwscanseq\",00,1"));
   res = executeAT(F("+QCFG=\"nwscanseq\",00,1"), 300);
   CONSOLE.println(res);
   bool scanSequence = isOk(res);
@@ -120,10 +120,10 @@ int printPingResult(String input) {
   
   int result = atoi(strtok(buf, ","));
   if (result == 0) {
-    CONSOLE.print("Dest="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Bytes="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Time="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", TTL="); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F("Dest=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Bytes=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Time=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", TTL=")); CONSOLE.print(strtok(NULL, ","));
     CONSOLE.println();
   }
   else {
@@ -142,12 +142,12 @@ int printPingSummary(String input) {
   
   int result = atoi(strtok(buf, ","));
   if (result == 0) {
-    CONSOLE.print("Sent="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Received="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Lost="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Min="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Max="); CONSOLE.print(strtok(NULL, ","));
-    CONSOLE.print(", Avg="); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F("Sent=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Received=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Lost=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Min=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Max=")); CONSOLE.print(strtok(NULL, ","));
+    CONSOLE.print(F(", Avg=")); CONSOLE.print(strtok(NULL, ","));
     CONSOLE.println();
   }
   else {
@@ -184,62 +184,62 @@ void setup() {
   SerialForModem.begin(BAUDRATE);
 
   CONSOLE.println();
-  CONSOLE.println("****************************");
-  CONSOLE.println("* Connectivity diagnostics *");
-  CONSOLE.println("****************************");
+  CONSOLE.println(F("****************************"));
+  CONSOLE.println(F("* Connectivity diagnostics *"));
+  CONSOLE.println(F("****************************"));
 
   CONSOLE.println();
-  CONSOLE.print("--- Initializing modem, please wait for a while...");
+  CONSOLE.print(F("--- Initializing modem, please wait for a while..."));
   pinMode(BG96_RST, OUTPUT);
   resetBG96();
   MODEM.restart();
-  CONSOLE.println("[OK]");
+  CONSOLE.println(F("[OK]"));
 
-  CONSOLE.print("Target modem: ");
+  CONSOLE.print(F("Target modem: "));
   String modemInfo = MODEM.getModemInfo();
   CONSOLE.println(modemInfo);
 
-  CONSOLE.print("Testing AT Command: ");
+  CONSOLE.print(F("Testing AT Command: "));
   bool testATResult = MODEM.testAT();
   CONSOLE.println((testATResult) ? "[OK]" : "[FAILED]");
   if (!testATResult) {
-    CONSOLE.println("Failed to execute test command, please RESET and retry later.");
+    CONSOLE.println(F("Failed to execute test command, please RESET and retry later."));
     while(1);
   }
 
   CONSOLE.println();
-  CONSOLE.println("--- Getting modem info...");
+  CONSOLE.println(F("--- Getting modem info..."));
   showModemInformation();
 
   CONSOLE.println();
-  CONSOLE.println("--- Executing AT commands to connect SORACOM network...");
+  CONSOLE.println(F("--- Executing AT commands to connect SORACOM network..."));
   bool setupNetworkResult = setupNetworkConfigurations();
   if (!setupNetworkResult) {
-    CONSOLE.println("Failed to execute setup commands, please RESET and retry later.");
+    CONSOLE.println(F("Failed to execute setup commands, please RESET and retry later."));
     while(1);
   }
 
   CONSOLE.println();
-  CONSOLE.print("--- Connecting to cellular network, please wait for a while...");
+  CONSOLE.print(F("--- Connecting to cellular network, please wait for a while..."));
   bool networkConnected = MODEM.waitForNetwork();
   CONSOLE.println((networkConnected) ? "[OK]" : "[FAILED]");
   if (!networkConnected) {
-    CONSOLE.println("Failed to connect cellular network.");
-    CONSOLE.println("Make sure active SIM has been inserted to the modem, and then check the antenna has been connected correctly.");
-    CONSOLE.println("Please RESET and retry later.");
+    CONSOLE.println(F("Failed to connect cellular network."));
+    CONSOLE.println(F("Make sure active SIM has been inserted to the modem, and then check the antenna has been connected correctly."));
+    CONSOLE.println(F("Please RESET and retry later."));
     while(1);
   }
 
   CONSOLE.println();
-  CONSOLE.println("--- Getting network info...");
+  CONSOLE.println(F("--- Getting network info..."));
   showNetworkInformation();
 
   CONSOLE.println();
-  CONSOLE.println("--- Conntectivity test: Ping to pong.soracom.io...");
+  CONSOLE.println(F("--- Conntectivity test: Ping to pong.soracom.io..."));
   pingToSoracomNetwork();
 
   CONSOLE.println();
-  CONSOLE.println("--- Execution completed, please write your own sketch and enjoy it.");
+  CONSOLE.println(F("--- Execution completed, please write your own sketch and enjoy it."));
 }
 
 void loop() {
