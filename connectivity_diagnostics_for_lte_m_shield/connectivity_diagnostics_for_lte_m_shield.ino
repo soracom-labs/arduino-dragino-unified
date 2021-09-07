@@ -55,8 +55,16 @@ bool isOk(String str) {
 void showModemInformation() {
   String res;
 
+  CONSOLE.println("> AT+GSN");
+  res = executeAT(F("+GSN"), 300);
+  CONSOLE.println(res);
+  
   CONSOLE.println("> AT+CIMI");
   res = executeAT(F("+CIMI"), 300);
+  CONSOLE.println(res);
+  
+  CONSOLE.println("> AT+QSIMSTAT?");
+  res = executeAT(F("+QSIMSTAT?"), 300);
   CONSOLE.println(res);
   
   CONSOLE.println("> AT+COPS?");
