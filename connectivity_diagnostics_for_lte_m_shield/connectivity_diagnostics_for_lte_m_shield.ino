@@ -72,6 +72,10 @@ void showModemInformation() {
 void showNetworkInformation() {
   String res;
   
+  CONSOLE.println(F("> AT+QIACT?"));
+  res = executeAT(F("+QIACT?"), 300);
+  CONSOLE.println(res);
+
   CONSOLE.println(F("> AT+QCSQ"));
   res = executeAT(F("+QCSQ"), 300);
   CONSOLE.println(res);
@@ -221,9 +225,10 @@ void setup() {
 
   CONSOLE.println();
   CONSOLE.print(F("--- Connecting to cellular network, please wait for a while..."));
+  bool networkConnect = MODEM.gprsConnect("soracom.io", "sora", "sora");
   bool networkConnected = MODEM.waitForNetwork();
-  CONSOLE.println((networkConnected) ? "[OK]" : "[FAILED]");
-  if (!networkConnected) {
+  CONSOLE.println((networkConnect && networkConnected) ? "[OK]" : "[FAILED]");
+  if (!(networkConnect && networkConnected)) {
     CONSOLE.println(F("Failed to connect cellular network."));
     CONSOLE.println(F("Make sure active SIM has been inserted to the modem, and then check the antenna has been connected correctly."));
     CONSOLE.println(F("Please RESET and retry later."));
