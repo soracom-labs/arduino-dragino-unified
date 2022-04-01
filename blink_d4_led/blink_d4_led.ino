@@ -2,7 +2,7 @@
  * blink_d4_led.ino
  * Blink the LED on D4
  *
- * Copyright (c) 2020 SORACOM, INC.
+ * Copyright SORACOM
  * This software is released under the MIT License, and libraries used by these sketches 
  * are subject to their respective licenses.
  * See also: https://github.com/soracom-labs/arduino-dragino-unified/README.md

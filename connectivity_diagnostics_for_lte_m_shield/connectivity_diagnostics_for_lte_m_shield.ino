@@ -1,7 +1,7 @@
 /*
  * Connectivity diagnostics for LTE-M Shield for Arduino
  *
- * Copyright (c) 2020 SORACOM, INC.
+ * Copyright SORACOM
  * This software is released under the MIT License, and libraries used by these sketches 
  * are subject to their respective licenses.
  * See also: https://github.com/soracom-labs/arduino-dragino-unified/README.md

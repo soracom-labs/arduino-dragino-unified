@@ -24,4 +24,4 @@ Please use them at your own risk.
 
 ## Copyright
 
-Copyright (C) 2020-2022 SORACOM, Inc.
+SORACOM

@@ -2,7 +2,7 @@
  * send_uptime_with_soracom.ino
  * Uptime(Working time from bootup) send to Cloud via Unified Endpoint of SORACOM
  *
- * Copyright (c) 2020 SORACOM, INC.
+ * Copyright SORACOM
  * This software is released under the MIT License, and libraries used by these sketches 
  * are subject to their respective licenses.
  * See also: https://github.com/soracom-labs/arduino-dragino-unified/README.md
