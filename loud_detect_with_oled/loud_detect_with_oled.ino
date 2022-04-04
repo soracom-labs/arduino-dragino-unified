@@ -2,9 +2,10 @@
  * loud_detect_with_oled.ino
  * Loud detector by sound sensor
  *
- * Copyright (c) 2020 SORACOM, INC.
- * This software is released under the MIT License.
- * http://opensource.org/licenses/mit-license.php
+ * Copyright SORACOM
+ * This software is released under the MIT License, and libraries used by these sketches 
+ * are subject to their respective licenses.
+ * See also: https://github.com/soracom-labs/arduino-dragino-unified/README.md
  */
 
 #include <U8x8lib.h>
