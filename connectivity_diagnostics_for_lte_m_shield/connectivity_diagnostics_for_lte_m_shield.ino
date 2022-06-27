@@ -85,8 +85,8 @@ void showNetworkInformation() {
   res = executeAT(F("+COPS?"), 300);
   CONSOLE.println(res);
   
-  CONSOLE.println(F("> AT+CGPADDR"));
-  res = executeAT(F("+CGPADDR"), 300);
+  CONSOLE.println(F("> AT+CGPADDR=1"));
+  res = executeAT(F("+CGPADDR=1"), 300);
   CONSOLE.println(res);
 }
 
