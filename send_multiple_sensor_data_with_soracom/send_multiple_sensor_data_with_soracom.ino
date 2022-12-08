@@ -33,12 +33,17 @@ U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ SCL, /* data=*/ SDA, /* reset
 #define U8X8_ENABLE_180_DEGREE_ROTATION 1
 
 #include <DHT.h>
-#define dht11Pin 3
-DHT dht(dht11Pin, DHT11);
+//#define USE_DHT11 // Use DHT11 (Blue)
+#define USE_DHT20 // Use DHT20 (Black)
 
-#define OLED_MAX_CHAR_LENGTH 16
-void drawText(U8X8* u8x8, const char* in_str, int width = OLED_MAX_CHAR_LENGTH);
-void drawText_P(U8X8* u8x8, const char* pgm_s, int width = OLED_MAX_CHAR_LENGTH);
+#ifdef USE_DHT11
+  #define dht11Pin 3
+  DHT dht(dht11Pin, DHT11);
+#endif
+#ifdef USE_DHT20
+  #include <Wire.h>
+  DHT dht(DHT20);
+#endif
 
 #include <Seeed_BMP280.h>
 BMP280 bmp280;
@@ -112,6 +117,10 @@ void setup() {
   sprintf_P(ip_addr_buf, PSTR("%d.%d.%d.%d"), ipaddr[0], ipaddr[1], ipaddr[2], ipaddr[3]);
   drawText(&u8x8, ip_addr_buf);
   delay(2000);
+
+  #ifdef USE_DHT20
+  Wire.begin();
+  #endif
 
   dht.begin();
   bmp280.init();
