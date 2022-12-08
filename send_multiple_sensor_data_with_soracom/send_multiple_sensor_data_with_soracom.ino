@@ -12,7 +12,7 @@
 #define INTERVAL_MS (60000)
 #define ENDPOINT "uni.soracom.io"
 #define SKETCH_NAME "send_multiple_sensor_data_with_soracom"
-#define VERSION "1.0"
+#define VERSION "1.1"
 
 /* for LTE-M Shield for Arduino */
 #define RX 10
