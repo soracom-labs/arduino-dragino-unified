@@ -29,8 +29,8 @@ TinyGsm modem(LTE_M_shieldUART);
 TinyGsmClient ctx(modem);
 
 #include <DHT.h>
-//#define USE_DHT11 // Use DHT11 (Blue)
-#define USE_DHT20 // Use DHT20 (Black)
+#define USE_DHT11 // Use DHT11 (Blue)
+// #define USE_DHT20 // Use DHT20 (Black)
 
 #ifdef USE_DHT11
   #define dht11Pin 3
