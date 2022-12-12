@@ -14,8 +14,8 @@ U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ SCL, /* data=*/ SDA, /* reset
 
 #include <DHT.h>
 
-#define USE_DHT11 // Use DHT11 (Blue)
-//#define USE_DHT20 // Use DHT20 (Black)
+// #define USE_DHT11 // Use DHT11 (Blue)
+#define USE_DHT20 // Use DHT20 (Black)
 
 #ifdef USE_DHT11
   #define dht11Pin 3
