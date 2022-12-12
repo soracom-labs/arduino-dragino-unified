@@ -12,7 +12,7 @@
 #define INTERVAL_MS (60000)
 #define ENDPOINT "uni.soracom.io"
 #define SKETCH_NAME "send_temp_and_humi_with_soracom"
-#define VERSION "1.0"
+#define VERSION "1.1"
 
 /* for LTE-M Shield for Arduino */
 #define RX 10
@@ -33,8 +33,17 @@ U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ SCL, /* data=*/ SDA, /* reset
 #define U8X8_ENABLE_180_DEGREE_ROTATION 1
 
 #include <DHT.h>
-#define dht11Pin 3
-DHT dht(dht11Pin, DHT11);
+
+// #define USE_DHT11 // Use DHT11 (Blue)
+#define USE_DHT20 // Use DHT20 (Black)
+
+#ifdef USE_DHT11
+  #define dht11Pin 3
+  DHT dht(dht11Pin, DHT11);
+#endif
+#ifdef USE_DHT20
+  DHT dht(DHT20);
+#endif
 
 #define OLED_MAX_CHAR_LENGTH 16
 void drawText(U8X8* u8x8, const char* in_str, int width = OLED_MAX_CHAR_LENGTH);
